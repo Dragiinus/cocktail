@@ -21,6 +21,15 @@ const User = () => {
         return () => flag.current = true
         
     }, [])
+
+    const delUser = (userId) => {
+        userService.deleteUser(userId)
+            .then(res => {
+                // Mise à jour du state pour affichage
+                setUsers((current) => current.filter(user => user.id !== userId))
+            })
+            .catch(err => console.log(err))
+    }
  
     // const marcel = (userId) => {
     //     console.log('click')
@@ -45,6 +54,7 @@ const User = () => {
                     {
                         users.map(user => (
                             <tr key={user.id}>
+                                <td><span className='del_ubtn' onClick={() => delUser(user.id)}>X</span></td>
                                 <td><Link to={`/admin/user/edit/${user.id}`}>{user.id}</Link></td>
                                 <td>{user.nom}</td>
                                 <td>{user.prénom}</td>

@@ -8,10 +8,18 @@ let getUser = (uid) => {
     return Axios.get('/users/'+uid)
 }
 
+let addUser = (user) => {
+    return Axios.put('users', user)
+}
+
 let updateUser = (user) => {
     return Axios.patch('/users/'+user.id, user)
 }
 
+let deleteUser = (uid) => {
+    return Axios.delete('/user/'+uid)
+}
+
 export const userService = {
-    getAllUsers, getUser, updateUser
+    getAllUsers, getUser, addUser, updateUser, deleteUser
 }
