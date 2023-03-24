@@ -1,20 +1,30 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useRef, useState} from 'react';
+import { useParams, useNavigate } from 'react-router-dom'
 import { userService } from '@/_services';
 
 const UserEdit = () => {
-    const [user, setUsers] = useState([])
+    const [user, setUser] = useState([])
     const flag = useRef(false)
+    let navigate = useNavigate
 
     let {uid} = useParams()
     console.log(uid)
 
     const onChange = (e) => {
-
+        setUser({
+            ...user,
+            [e.target.name]: e.target.value
+        })
     }
 
     const onSubmit = (e) => {
-        
+        e.preventDefault()
+        userService.updateUser(user)
+            .then(res => {
+                navigate('../index')
+            })
+            .catch(err => console.log(err))
+
     }
 
     useEffect(() => {
@@ -22,12 +32,13 @@ const UserEdit = () => {
             userService.getUser(uid)
                 .then(res => {
                     console.log(res.data.data)
-                    setUsers(res.data.data)
+                    setUser(res.data.data)
                 })
                 .catch(err => console.log(err))
         }
         
         return () => flag.current = true
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
@@ -51,7 +62,7 @@ const UserEdit = () => {
                     <input type="text" name="email" value={user.email} onChange={onChange}/>
                 </div>
                 <div className="group">
-                    <button>connexion</button>
+                    <button>Modifier</button>
                 </div>
             </form>
         </div>
