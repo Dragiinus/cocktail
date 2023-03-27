@@ -1,13 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const SideMenu = () => {
     return (
         <div className="SideMenu">
-            <ul>
-                <li><Link to="/">Acceuil</Link></li>
-                <li>gesrdfg</li>
-                <li><Link to ="/admin/dashboard">Dashboard</Link></li>
+           <ul>
+                <li><Link to="/">Accueil</Link></li>
+                <li>&nbsp;</li>
+                <li><Link to="/admin/dashboard">Dashboard</Link></li>
                 <li>
                     User
                     <ul>
@@ -16,13 +16,13 @@ const SideMenu = () => {
                     </ul>
                 </li>
                 <li>
-                    cocktail
+                    Cocktail
                     <ul>
                         <li><Link to="/admin/cocktail/index">Liste</Link></li>
-                        <li><Link to="/admin/cocktail/edit">Ajouter</Link></li>
+                        <li><Link to="/admin/cocktail/add">Ajouter</Link></li>
                     </ul>
                 </li>
-            </ul>
+           </ul>
         </div>
     );
 };

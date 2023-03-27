@@ -1,27 +1,27 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom'
-
 import { userService } from '@/_services';
 
 const User = () => {
-    // let navigate = useNavigate()
     const [users, setUsers] = useState([])
     const flag = useRef(false)
 
+    // Récupération de la liste des utilisateurs à l'affichage
     useEffect(() => {
         if(flag.current === false){
             userService.getAllUsers()
                 .then(res => {
-                    console.log(res.data.data)
-                    setUsers(res.data)
+                    // Liste dans le state
+                    setUsers(res.data.data)
                 })
                 .catch(err => console.log(err))
         }
-        
+
         return () => flag.current = true
         
     }, [])
 
+    // Gestion du bouton de suppression d'un utilisateur
     const delUser = (userId) => {
         userService.deleteUser(userId)
             .then(res => {
@@ -30,19 +30,14 @@ const User = () => {
             })
             .catch(err => console.log(err))
     }
- 
-    // const marcel = (userId) => {
-    //     console.log('click')
-    //     navigate("../edit/"+userId)
-    // }
 
-    return (
+    return (        
         <div className="User">
-            User list
-            {/* <button onClick={() => marcel(4)}>user 4</button> */}
+            User liste       
             <table>
                 <thead>
                     <tr>
+                        <th></th>
                         <th>#</th>
                         <th>Nom</th>
                         <th>Prénom</th>
@@ -57,7 +52,7 @@ const User = () => {
                                 <td><span className='del_ubtn' onClick={() => delUser(user.id)}>X</span></td>
                                 <td><Link to={`/admin/user/edit/${user.id}`}>{user.id}</Link></td>
                                 <td>{user.nom}</td>
-                                <td>{user.prénom}</td>
+                                <td>{user.prenom}</td>
                                 <td>{user.email}</td>
                                 <td>{user.createdAt}</td>
                             </tr>
